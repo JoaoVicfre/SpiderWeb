@@ -17,7 +17,7 @@ class Point {
     draw() {
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-        ctx.fillStyle = "white";
+        ctx.fillStyle = "black";
         ctx.fill();
     }
     update() {
@@ -47,8 +47,8 @@ function createPoints() {
 }
 
 function conectPoints() {
-    ctx.strokeStyle = "rgba(25, 255, 255, 0.6)";
-    ctx.lineWidth = 2;
+    ctx.strokeStyle = "rgba(31, 31, 31, 0.8)";
+    ctx.lineWidth = 1;
     for (let i = 0; i < points.length; i++){
         for (let j = 0; j < points.length; j++){
             const dx = points[i].x - points[j].x;
