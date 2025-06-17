@@ -5,7 +5,7 @@ canvas.height = window.innerHeight;
 const numPoints = 30;
 const points = [];
 const mouse = { x: canvas.width / 2, y: canvas.height / 2 };
-class Point { 
+class Point {
     constructor(x, y) {
         this.x = x;
         this.y = y;
@@ -28,29 +28,29 @@ class Point {
         const angle = Math.atan2(dy, dx);
         this.x += Math.cos(angle) * force;
         this.y += Math.sin(angle) * force;
-        this.x +=(this.originX - this.x) * 0.05;
-        this.y +=(this.originY - this.y) * 0.05;
+        this.x += (this.originX - this.x) * 0.05;
+        this.y += (this.originY - this.y) * 0.05;
         this.draw();
     }
 }
 
 function createPoints() {
     const gridSize = Math.min(canvas.width, canvas.height) / 10;
-    for (let i = 0; i < numPoints; i++){
-        for (let j = 0; j < numPoints; j++){
+    for (let i = 0; i < numPoints; i++) {
+        for (let j = 0; j < numPoints; j++) {
             const x = i * gridSize + canvas.width / 6;
             const y = j * gridSize + canvas.height / 6;
             points.push(new Point(x, y));
         }
-        
+
     }
 }
 
 function conectPoints() {
     ctx.strokeStyle = "rgba(31, 31, 31, 0.8)";
     ctx.lineWidth = 1;
-    for (let i = 0; i < points.length; i++){
-        for (let j = 0; j < points.length; j++){
+    for (let i = 0; i < points.length; i++) {
+        for (let j = 0; j < points.length; j++) {
             const dx = points[i].x - points[j].x;
             const dy = points[i].y - points[j].y;
             const distance = Math.sqrt(dx * dx + dy * dy);
@@ -69,26 +69,26 @@ function animate() {
     points.forEach((point) => point.update());
     conectPoints();
     requestAnimationFrame(animate);
-    }
+}
 
-    canvas.addEventListener('mousemove', (e) => {
-        mouse.x = e.clientX;
-        mouse.y = e.clientY;
+canvas.addEventListener('mousemove', (e) => {
+    mouse.x = e.clientX;
+    mouse.y = e.clientY;
+});
+
+canvas.addEventListener('click', () => {
+    points.forEach((point) => {
+        point.originX = Math.random() * 50 - 25;
+        point.originY = Math.random() * 50 - 25;
     });
+});
 
-    canvas.addEventListener('click', () => {
-        points.forEach((point) => {
-            point.originX = Math.random() * 50 - 25;
-            point.originY = Math.random() * 50 - 25;
-        });
-    });
-
-    window.addEventListener('resize', () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        points.length = 0;
-        createPoints();
-    })
-
+window.addEventListener('resize', () => {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    points.length = 0;
     createPoints();
-    animate();
+})
+
+createPoints();
+animate();
